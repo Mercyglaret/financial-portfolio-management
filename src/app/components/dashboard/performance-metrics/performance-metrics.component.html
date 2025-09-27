@@ -1,0 +1,73 @@
+<div class="performance-metrics">
+  <h3>Performance Metrics</h3>
+
+
+  <div class="table-container" *ngIf="investments && investments.length > 0">
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th (click)="sortBy('symbol')" style="cursor:pointer">Asset <span
+              *ngIf="sortColumn==='symbol'">{{sortDirection==='asc'?'▲':'▼'}}</span></th>
+          <th (click)="sortBy('assetType')" style="cursor:pointer">Type <span
+              *ngIf="sortColumn==='assetType'">{{sortDirection==='asc'?'▲':'▼'}}</span></th>
+          <th (click)="sortBy('quantity')" style="cursor:pointer">Quantity <span
+              *ngIf="sortColumn==='quantity'">{{sortDirection==='asc'?'▲':'▼'}}</span></th>
+          <th class="text-right" (click)="sortBy('totalValue')" style="cursor:pointer">Current Value <span
+              *ngIf="sortColumn==='totalValue'">{{sortDirection==='asc'?'▲':'▼'}}</span></th>
+          <th class="text-right" (click)="sortBy('gainLoss')" style="cursor:pointer">Gain/Loss <span
+              *ngIf="sortColumn==='gainLoss'">{{sortDirection==='asc'?'▲':'▼'}}</span></th>
+          <th class="text-right" (click)="sortBy('gainLossPercentage')" style="cursor:pointer">Return % <span
+              *ngIf="sortColumn==='gainLossPercentage'">{{sortDirection==='asc'?'▲':'▼'}}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let investment of paginatedInvestments; trackBy: trackByInvestment" class="table-row">
+          <td>
+            <div class="asset-info">
+              <strong>{{ investment.symbol }}</strong>
+              <span class="asset-name">{{ investment.name }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="asset-type">{{ investment.assetType }}</span>
+          </td>
+          <td>{{ investment.quantity | number:'1.0-4' }}</td>
+          <td class="text-right">{{ investment.totalValue | customCurrency }}</td>
+          <td class="text-right" [appHighlightPerformance]="investment.gainLoss">
+            {{ investment.gainLoss | customCurrency }}
+          </td>
+          <td class="text-right" [appHighlightPerformance]="investment.gainLossPercentage">
+            {{ investment.gainLossPercentage | number:'1.2-2' }}%
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-bar mb-6" *ngIf="totalPages > 1">
+      <div class="pagination-info">
+        Page {{currentPage}} of {{totalPages}}
+      </div>
+      <div class="pagination-controls">
+        <label class="page-size-label">
+          Show
+          <select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+            <option *ngFor="let size of [5, 10, 20, 50]" [value]="size">{{size}}</option>
+          </select>
+          per page
+        </label>
+      </div>
+      <div class="pagination pagination-right">
+        <button (click)="setPage(currentPage-1)" [disabled]="currentPage === 1">Prev</button>
+        <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+          <button (click)="setPage(i+1)" [class.active]="currentPage === (i+1)">{{i+1}}</button>
+        </ng-container>
+        <button (click)="setPage(currentPage+1)" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-data" *ngIf="!investments || investments.length === 0">
+    <p>No investments found. Start by adding your first investment!</p>
+  </div>
+</div>

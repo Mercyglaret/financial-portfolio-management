@@ -1,0 +1,6 @@
+<div class="chart-container" *ngIf="chartData.length > 0">
+  <div echarts [options]="chartOptions" class="chart"></div>
+</div>
+<div class="loading" *ngIf="chartData.length === 0">
+  <p>Loading market trends...</p>
+</div>

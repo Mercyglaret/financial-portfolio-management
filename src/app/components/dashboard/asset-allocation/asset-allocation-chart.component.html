@@ -1,0 +1,6 @@
+<div class="chart-container" *ngIf="data?.assetAllocation?.length">
+  <div echarts [options]="chartOptions" class="chart"></div>
+</div>
+<div class="no-data" *ngIf="!data?.assetAllocation?.length">
+  <p>No asset allocation data available</p>
+</div>

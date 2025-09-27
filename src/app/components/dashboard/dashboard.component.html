@@ -1,0 +1,58 @@
+<div class="dashboard-container animate-fade-in">
+  <div class="dashboard-header">
+    <h1>Financial Insights Dashboard</h1>
+    <p class="dashboard-subtitle">Real-Time Investment & Performance Monitoring</p>
+  </div>
+
+  <div class="grid grid-cols-4 grid-cols-lg-4 gap-6">
+    <div class="stats-card card" *ngIf="portfolioSummary$ | async as summary">
+      <div class="stats-content">
+        <h3>Total Investment Value</h3>
+        <p class="stats-value">{{ summary.totalValue | customCurrency }}</p>
+      </div>
+    </div>
+
+    <div class="stats-card card" *ngIf="portfolioSummary$ | async as summary">
+      <div class="stats-content">
+        <h3>Total Gain/Loss</h3>
+        <p class="stats-value" [appHighlightPerformance]="summary.totalGainLoss">
+          {{ summary.totalGainLoss | customCurrency }}
+        </p>
+      </div>
+    </div>
+
+    <div class="stats-card card" *ngIf="portfolioSummary$ | async as summary">
+      <div class="stats-content">
+        <h3>Return %</h3>
+        <p class="stats-value" [appHighlightPerformance]="summary.totalGainLossPercentage">
+          {{ summary.totalGainLossPercentage | number:'1.2-2' }}%
+        </p>
+      </div>
+    </div>
+
+    <div class="stats-card card" *ngIf="portfolioSummary$ | async as summary">
+      <div class="stats-content">
+        <h3>Total Invested</h3>
+        <p class="stats-value">{{ summary.totalInvested | customCurrency }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 grid-cols-lg-2 gap-6 mt-5">
+    <div class="chart-card card">
+      <h3>Asset Allocation</h3>
+      <app-asset-allocation-chart [data]="portfolioSummary$ | async">
+      </app-asset-allocation-chart>
+    </div>
+
+    <div class="chart-card card">
+      <h3>Market Trends</h3>
+      <app-market-trends-chart></app-market-trends-chart>
+    </div>
+  </div>
+
+  <div class="card mb-8 mt-5">
+    <app-performance-metrics [investments]="investments$ | async">
+    </app-performance-metrics>
+  </div>
+</div>

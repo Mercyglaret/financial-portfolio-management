@@ -1,0 +1,42 @@
+<div class="preview-card card">
+  <h3>Preview</h3>
+  
+  <div class="preview-content" *ngIf="formData">
+    <div class="preview-item">
+      <span class="preview-label">Asset Type:</span>
+      <span class="preview-value">{{ formData.assetType }}</span>
+    </div>
+    
+    <div class="preview-item">
+      <span class="preview-label">Symbol:</span>
+      <span class="preview-value">{{ formData.symbol }}</span>
+    </div>
+    
+    <div class="preview-item">
+      <span class="preview-label">Name:</span>
+      <span class="preview-value">{{ formData.name }}</span>
+    </div>
+    
+    <div class="preview-item">
+      <span class="preview-label">Quantity:</span>
+      <span class="preview-value">{{ formData.quantity | number:'1.0-4' }}</span>
+    </div>
+    
+    <div class="preview-item">
+      <span class="preview-label">Purchase Price:</span>
+      <span class="preview-value">{{ formData.purchasePrice | customCurrency }}</span>
+    </div>
+    
+    <div class="preview-item">
+      <span class="preview-label">Purchase Date:</span>
+      <span class="preview-value">{{ formData.purchaseDate | date:'mediumDate' }}</span>
+    </div>
+    
+    <div class="preview-summary">
+      <div class="summary-item">
+        <span class="summary-label">Total Investment:</span>
+        <span class="summary-value">{{ getTotalInvestment() | customCurrency }}</span>
+      </div>
+    </div>
+  </div>
+</div>

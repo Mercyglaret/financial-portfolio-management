@@ -1,0 +1,91 @@
+<div class="form-container animate-fade-in">
+  <div class="form-header">
+    <h1>Add New Investment</h1>
+    <p class="form-subtitle">Enter your investment details below</p>
+  </div>
+
+  <div class="form-layout">
+    <div class="form-section card">
+      <h2>Investment Details</h2>
+
+      <form [formGroup]="investmentForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="assetType" class="form-label">Asset Type *</label>
+          <select id="assetType" formControlName="assetType" class="form-input"
+            [class.error]="isFieldInvalid('assetType')">
+            <option value="">Select Asset Type</option>
+            <option *ngFor="let type of assetTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div class="form-error" *ngIf="isFieldInvalid('assetType')">
+            {{ getFieldError('assetType') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="symbol" class="form-label">Symbol *</label>
+          <input type="text" id="symbol" formControlName="symbol" placeholder="e.g., AAPL, BTC" class="form-input"
+            [class.error]="isFieldInvalid('symbol')">
+          <div class="form-error" *ngIf="isFieldInvalid('symbol')">
+            {{ getFieldError('symbol') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="name" class="form-label">Asset Name *</label>
+          <input type="text" id="name" formControlName="name" placeholder="e.g., Apple Inc., Bitcoin" class="form-input"
+            [class.error]="isFieldInvalid('name')">
+          <div class="form-error" *ngIf="isFieldInvalid('name')">
+            {{ getFieldError('name') }}
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="quantity" class="form-label">Quantity *</label>
+            <input type="number" id="quantity" formControlName="quantity" placeholder="0" step="0.0001" min="0"
+              class="form-input" [class.error]="isFieldInvalid('quantity')">
+            <div class="form-error" *ngIf="isFieldInvalid('quantity')">
+              {{ getFieldError('quantity') }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="purchasePrice" class="form-label">Purchase Price ($) *</label>
+            <input type="number" id="purchasePrice" formControlName="purchasePrice" placeholder="0.00" step="0.01"
+              min="0" class="form-input" [class.error]="isFieldInvalid('purchasePrice')">
+            <div class="form-error" *ngIf="isFieldInvalid('purchasePrice')">
+              {{ getFieldError('purchasePrice') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="purchaseDate" class="form-label">Purchase Date *</label>
+          <input type="date" id="purchaseDate" formControlName="purchaseDate" class="form-input"
+            [class.error]="isFieldInvalid('purchaseDate')" [max]="maxDate">
+          <div class="form-error" *ngIf="isFieldInvalid('purchaseDate')">
+            {{ getFieldError('purchaseDate') }}
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">
+            Reset
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+            <span *ngIf="isSubmitting">Adding...</span>
+            <span *ngIf="!isSubmitting">Add Investment</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="preview-section" *ngIf="investmentForm.valid">
+      <app-form-preview [formData]="getPreviewData()"></app-form-preview>
+    </div>
+  </div>
+
+  <div class="success-message" *ngIf="showSuccessMessage">
+    <p>✓ Investment added successfully!</p>
+  </div>
+</div>

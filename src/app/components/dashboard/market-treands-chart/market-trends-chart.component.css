@@ -1,0 +1,30 @@
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  color: var(--gray-500);
+}
+
+:host ::ng-deep .line-chart .line-series .line {
+  stroke-width: 3px;
+}
+
+:host ::ng-deep .line-chart .circle {
+  r: 4px;
+}
+
+:host ::ng-deep .line-chart .circle:hover {
+  r: 6px;
+}
+
+.chart {
+  width: 100%;
+  height: 400px; /* adjust as needed */
+}
