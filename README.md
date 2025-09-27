@@ -62,7 +62,7 @@ financial-portfolio-management/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/financial-portfolio-management.git
+git clone https://github.com/Mercyglaret/financial-portfolio-management.git
 cd financial-portfolio-management
 ```
 
